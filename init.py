@@ -1,22 +1,19 @@
 import accounts as act 
 import user
 import broker as bk
-
-#def initialize_broker():
-broker = user.user('Broker')
-broker.accounts['crypto'] = act.account('0x790uf08h787136h108')
-df = bk.broker_wallet()
-for row in range(len(df)):
-	broker.accounts['crypto'].holdings[str(df.iloc[row][0])] = df.iloc[row][1]		
-#initialize_broker()
-
+from actions import action
 
 
 rav = user.user('guserino')
-rav.accounts['crypto'] = act.account('0x7n289h9868631fb712')
-rav.accounts['crypto'].modify_holdings(1,'Ethereum',650)
-rav.accounts['crypto'].modify_holdings(1,'Algorand',350)
-
-
-
-#rav.add_account('crypto_wallet')
+rav.accounts['crypto'] = act.account('0x7n289h9868631fb712',{})
+wallet = rav.accounts['crypto']
+rav.accounts['cryptov2'] = act.account('0x79712597n1257hf721',{})
+wallet_alt = rav.accounts['cryptov2']
+action.add_withdraw_funds(wallet,'add',5000)
+action.buy(wallet,'Ethereum',250)
+print(wallet.holdings)
+action.buy(wallet,'Algorand',.06,'Ethereum')
+print(wallet.holdings)
+action.transfer(wallet,'Algorand',12,wallet_alt)
+print(wallet.holdings)
+print(wallet_alt.holdings)

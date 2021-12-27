@@ -3,7 +3,7 @@ class user():
 	def __init__(self,name,accounts={}):
 		self.name = name
 		self.accounts = accounts
-		self.accounts['cash'] = 0
+		self.accounts['Cash'] = 0
 
 	def add_account(self,account_name):
 		self.accounts[account_name]
