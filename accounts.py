@@ -1,39 +1,12 @@
 import broker as bk 
 import user
+import pandas as pd
 class account():
-	def __init__(self,address,holdings):
+	def __init__(self,address,holdings,account_type='Regular'):
 		self.address = address
 		self.holdings = holdings
-		self.holdings['Cash'] = 1000
-		#self.holdings['ethereum'] = 0
-	#@staticmethod
+		self.account_type = account_type if account_type is not None else 'Premium'
+		if account_type == 'Premium':
+			self.holdings['Margin'] = 0
 
-	def modify_holdings(self,action,security_name,amount,counterparty=None):
-		# 1-Purchase | 2-Withdraw| 3-Transfer Holding (pending)
-		if action == 1:
-			if security_name not in self.holdings:
-				self.holdings[security_name] = 0
-			if amount <= self.holdings['Cash']:
-				self.holdings['Cash'] -= amount
-				self.holdings[security_name] += amount/bk.market_rate(security_name)
-			else:
-				raise Exception("Purchase amount exceeds funds available")
-		elif action == 2:
-			if amount <= self.holdings[security_name]:
-				self.holdings['Cash'] += amount*bk.market_rate(security_name)
-				self.holdings[security_name] -= amount/bk.market_rate(security_name)
-			else:
-				raise Exception("Withdraw amount exceeds funds available")
-		elif action == 3:
-			if amount <= self.holdings[security_name]:
-				if security_name not in counterparty.holdings:
-					counterparty.holdings[security_name] = 0
-				self.holdings[security_name] -= amount/bk.market_rate(security_name)
-				counterparty.holdings[security_name] += amount/bk.market_rate(security_name)
-			#else:
-			#	raise Exception("Transfer amount exceeds funds available")
-		elif action > 3:
-			raise Exception("Action not supported")
-	#def account_action(self,action,security_name,amount):
-	#	account.modify_holdings(self,action,security_name,amount)
 

@@ -1,5 +1,4 @@
 import pandas as pd  
-#class broker:
 
 def market_rate(crypto):
 	spot_rates = pd.read_excel('spot_rates.xlsx','spot_rates')
@@ -14,5 +13,8 @@ class broker():
 			self.holdings[str(df.iloc[row][0])] = df.iloc[row][1]
 
 broker = broker()
-print('RAV Securities LLC. - Holdings:')
-print(broker.holdings)
+trade_log = pd.read_excel('spot_rates.xlsx','trade_log')
+margin_threshold = .5
+
+
+
